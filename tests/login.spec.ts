@@ -31,6 +31,16 @@ test('Sign with Invalid Email and Password', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Email Address' }).fill('webliv.com');
   await page.getByPlaceholder('Password').fill('      ');
   await page.getByRole('button', { name: 'CONTINUE' }).click();
+  await expect(page.locator('#frm_replace_signin')).toContainText('Invalid Username or Password');
+  
+});
+
+test('Sign with valid Email with Spaces before and after the email and Valid Password', async ({ page }) => {
+
+  await page.goto('https://webpos.salesplaypos.com/sign_in');
+  await page.getByRole('textbox', { name: 'Email Address' }).fill('   weblive@yopmail.com   ');
+  await page.getByPlaceholder('Password').fill('123456789');
+  await page.getByRole('button', { name: 'CONTINUE' }).click();
   await expect(page.locator('#frm_replace_signin')).toContainText('Incorrect Username or Password');
   
 });
